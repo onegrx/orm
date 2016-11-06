@@ -24,10 +24,10 @@ public class Student {
     @Column(name = Columns.INDEX_NUMBER, nullable = false, unique = true)
     private int indexNumber;
 
-    //[E2]
+    @OneToMany(mappedBy = "student")
     private Set<Grade> gradeSet = new HashSet<>();
 
-    //[E3]
+    @ManyToMany(mappedBy = "studentSet")
     private Set<Course> courseSet = new HashSet<>();
 
     Student() {

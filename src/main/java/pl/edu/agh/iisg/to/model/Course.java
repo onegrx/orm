@@ -25,7 +25,7 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "ID"))
     private Set<Student> studentSet = new HashSet<>();
 
-    //[E1]
+    @OneToMany(mappedBy = "course")
     private Set<Grade> gradeSet = new HashSet<>();
 
     Course() {

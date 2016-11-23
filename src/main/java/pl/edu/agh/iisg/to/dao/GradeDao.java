@@ -7,7 +7,12 @@ import pl.edu.agh.iisg.to.model.Student;
 public class GradeDao extends GenericDao<Grade> {
 
     public boolean markStudent(final Student student, final Course course, final float grade) {
-        //TODO [9] Implementacja oceniania studenta w danym kursie
+        Grade studentCourseGrade = new Grade(student, course, grade);
+        if (student.gradeSet().contains(studentCourseGrade) || course.gradeSet().contains(studentCourseGrade)) {
+            return false;
+        }
+        student.gradeSet().add(studentCourseGrade);
+        course.gradeSet().add(studentCourseGrade);
         return true;
     }
 

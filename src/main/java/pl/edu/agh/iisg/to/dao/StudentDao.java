@@ -5,10 +5,7 @@ import pl.edu.agh.iisg.to.model.Course;
 import pl.edu.agh.iisg.to.model.Student;
 
 import javax.persistence.PersistenceException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class StudentDao extends GenericDao<Student> {
 
@@ -49,8 +46,22 @@ public class StudentDao extends GenericDao<Student> {
     }
 
     public Map<Course, Float> createReport(final Student student) {
-        //TODO [10] Implementacja tworzenia raportu dla studenta w każdym kursie z średnią ocen
-        return Collections.emptyMap();
+        Map<Course, Float> finalReport = new HashMap<>();
+        Map<Course, Float> report = new HashMap<>();
+        Map<Course, Integer> gradesNumbers = new HashMap<>();
+        student.gradeSet().forEach(gr -> {
+
+            float sum = report.containsKey(gr.course()) ? report.get(gr.course()) : 0;
+            report.put(gr.course(), sum + gr.grade());
+            int count = gradesNumbers.containsKey(gr.course()) ? gradesNumbers.get(gr.course()) : 0;
+            gradesNumbers.put(gr.course(), count + 1);
+
+        });
+        report.forEach((course, gradeSum) -> {
+            float mean = gradeSum / gradesNumbers.get(course);
+            finalReport.put(course, mean);
+        });
+        return finalReport;
     }
 
 }

@@ -51,9 +51,9 @@ public class StudentDao extends GenericDao<Student> {
         Map<Course, Integer> gradesNumbers = new HashMap<>();
         student.gradeSet().forEach(gr -> {
 
-            float sum = report.containsKey(gr.course()) ? report.get(gr.course()) : 0;
+            float sum = report.getOrDefault(gr.course(), 0f);
             report.put(gr.course(), sum + gr.grade());
-            int count = gradesNumbers.containsKey(gr.course()) ? gradesNumbers.get(gr.course()) : 0;
+            int count = gradesNumbers.getOrDefault(gr.course(), 0);
             gradesNumbers.put(gr.course(), count + 1);
 
         });
